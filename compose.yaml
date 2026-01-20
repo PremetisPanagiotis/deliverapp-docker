@@ -12,6 +12,8 @@ services:
         image: ghcr.io/premetispanagiotis/deliverapp-django:latest
         ports:
           - '8000:8000'
+        volumes:
+          - ./deliverapp-django/deliverapp-django/uploads:/app/
         environment:
           DATABASE_ENGINE: mysql
           DATABASE_HOST: db
@@ -33,3 +35,4 @@ services:
       depends_on:
 
         - api
+
