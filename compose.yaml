@@ -4,7 +4,7 @@ services:
         ports:
           - '33060:3306'
         volumes:
-          - ./data:/docker-entrypoint-initdb.d
+          - ./db:/docker-entrypoint-initdb.d
         environment:
             MYSQL_DATABASE: deliverapp_db
             MYSQL_ROOT_PASSWORD: password
@@ -31,4 +31,5 @@ services:
       ports:
         - '3000:3000'
       depends_on:
+
         - api
