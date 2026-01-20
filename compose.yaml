@@ -1,0 +1,34 @@
+services:
+    db:
+        image: mysql:8
+        ports:
+          - '33060:3306'
+        volumes:
+          - ./data:/docker-entrypoint-initdb.d
+        environment:
+            MYSQL_DATABASE: deliverapp_db
+            MYSQL_ROOT_PASSWORD: password
+    api:
+        image: ghcr.io/premetispanagiotis/deliverapp-django:latest
+        ports:
+          - '8000:8000'
+        environment:
+          DATABASE_ENGINE: mysql
+          DATABASE_HOST: db
+          DATABASE_NAME: deliverapp_db
+          DATABASE_PORT: 3306
+          DATABASE_USERNAME: root
+          DATABASE_PASSWORD: password
+        expose:
+          - '8000'
+        depends_on:
+          - db
+    web:
+      env_file: ./deliverapp-react/.env
+      image: ghcr.io/premetispanagiotis/deliverapp-react:latest
+      environment:
+        - NEXT_PUBLIC_API_URL=http://localhost:8000
+      ports:
+        - '3000:3000'
+      depends_on:
+        - api
