@@ -13,7 +13,7 @@ services:
         ports:
           - '8000:8000'
         volumes:
-          - ./deliverapp-django/deliverapp-django/uploads:/app/
+          - ./deliverapp-django/deliverapp-django/uploads:/app/uploads
         environment:
           DATABASE_ENGINE: mysql
           DATABASE_HOST: db
@@ -26,7 +26,6 @@ services:
         depends_on:
           - db
     web:
-      env_file: ./deliverapp-react/.env
       image: ghcr.io/premetispanagiotis/deliverapp-react:latest
       environment:
         - NEXT_PUBLIC_API_URL=http://localhost:8000
@@ -35,4 +34,5 @@ services:
       depends_on:
 
         - api
+
 
